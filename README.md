@@ -8,7 +8,7 @@ Installation
   - If the virtual environment doesn't work
     - Delete the env folder
     - Create a new virtual environment ("virtualenv env")
-5) Install the following software: (commands in Linux)
+    - 5) Install the following software: (commands in Linux)
 
   - Flask
   pip install flask
