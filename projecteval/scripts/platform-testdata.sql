@@ -11,4 +11,10 @@
             'Sony Computer Entertainment', 'Sony Computer Entertainment',
             'Semi-custom 8-core AMDx86-64 Jaguar', '8GB GDDR5',
             'Semi-custom AMD GCN Radeon', 'Hard drive, 500GB', 'testadmin', current_timestamp,
+            'testadmin', current_timestamp),
+
+            ('Wii U', '2012-11-18', 'Wii U is the next great gaming console from Nintendo and it redefines how you will play next. With its innovative Wii U GamePad controller, it will not only introduce entirely new ways to play games, it will also transform how you connect with friends and enjoy entertainment.',
+            'Nintendo', 'Nintendo',
+            'Tri Core, 3 GHz PowerPC-based 45nm CPU', '2GB RAM',
+            'Custom 40nm AMD GPU with 32 MB embedded eDRAM', 'Flash memory, 32GB', 'testadmin', current_timestamp,
             'testadmin', current_timestamp);
