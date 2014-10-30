@@ -1,0 +1,8 @@
+{% extends "layout/base.html" %}
+{% block content %}
+<ul>
+    {% for game in games %}
+    <li>{{ game["title"] }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

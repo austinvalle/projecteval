@@ -16,10 +16,10 @@ from projecteval.auth.controllers import auth as auth_module
 
 from projecteval.api.controllers import api as api_module
 
-#from projecteval.games.controllers import games as games_module
+from projecteval.games.controllers import games as games_module
 
 projecteval.register_blueprint(auth_module)
 projecteval.register_blueprint(api_module)
-#projecteval.register_blueprint(games_module)
+projecteval.register_blueprint(games_module)
 
 db.create_all()
