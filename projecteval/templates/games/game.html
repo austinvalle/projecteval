@@ -1,7 +1,20 @@
 {% extends "layout/base.html" %}
+{% block javascript %}{% endblock %}
 {% block content %}
-<ul>
-    <li>Title: {{ game["title"] }} </li>
-    <li>Description: {{ game["desc"] }} </li>
-</ul>
+<p>
+    Description: {{ game['desc'] }}
+</p>
+<p>
+    Release Date: {{ game['release_date'] }}
+</p>
+<p>
+    Developer: {{ game['developer'] }}
+</p>
+<p>
+    Publisher: {{ game['publisher'] }}
+</p>
+<p>
+    Trailer: <a href="{{ game['trailer_url'] }}">{{ game['trailer_url'] }}</a>
+</p>
+<a href="" onclick="window.history.go(-1); return false;">Go Back</a>
 {% endblock %}

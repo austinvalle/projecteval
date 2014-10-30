@@ -1,9 +1,25 @@
 <!doctype html>
 <html>
     <head>
-
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/eval.css') }}" type="text/css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" >
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        {% block javascript %}{% endblock %}
     </head>
     <body>
+    	<div class="nav-bar">
+		    <header><a href="/"><img src="{{ url_for('static', filename='images/pylons-logo.gif') }}" /></a></header>
+		    <nav>
+			    <ul>
+				    <li><a href="{{ url_for('games.all_games') }}">Games</a></li>
+				    <li><a href="/platforms">Platforms</a></li>
+			    </ul>
+		    </nav>
+
+		    <div>
+			    <!--Login will go here-->
+		    </div>
+	    </div>
         <div id="content">
             {% block content %}{% endblock %}
         </div>

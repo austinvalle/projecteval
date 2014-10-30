@@ -1,8 +1,10 @@
 {% extends "layout/base.html" %}
+{% block javascript %}{% endblock %}
+
 {% block content %}
 <ul>
     {% for game in games %}
-    <li>{{ game["title"] }}</li>
+    <li><a href="{{ url_for('games.game_info', id=game['id']) }}">{{ game["title"] }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
