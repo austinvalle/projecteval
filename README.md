@@ -31,6 +31,12 @@ Installation
   - Requests module
     - *pip install requests*
 
+  - Flask-Restful
+    - *pip install flask-restful*
+
+  - Flask-Restful-Swagger
+    - *pip install flask-restful-swagger*
+
 6. Run the project (*"python run.py"*)
 7. Open up pgAdmin III and run the game-testdata.sql insert script.
 8. Test the app 
