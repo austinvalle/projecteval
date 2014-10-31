@@ -1,0 +1,11 @@
+{% extends "layout/base.html" %}
+{% block javascript %}{% endblock %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="search">
+    <input type="text" id="search-text-box" name="search-text-box" class="search-text-box" value="" />
+    <button id="search-button" class="search-button">Search</button>
+</div>
+<div id="results">
+</div>
+{% endblock %}

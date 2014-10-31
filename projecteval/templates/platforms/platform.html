@@ -1,0 +1,27 @@
+{% extends "layout/base.html" %}
+{% block javascript %}{% endblock %}
+{% block title %}{{ platform['name'] }}{% endblock %}
+{% block content %}
+<p>
+    Description: {{ platform['desc'] }}
+</p>
+<p>
+    Release Date: {{ platform['release_date'] }}
+</p>
+<p>
+    Developer: {{ platform['developer'] }}
+</p>
+<p>
+    CPU: {{ platform['cpu'] }}
+</p>
+<p>
+    Memory: {{ platform['memory'] }}
+</p>
+<p>
+    Graphics: {{ platform['graphics'] }}
+</p>
+<p>
+    Storage: {{ platform['storage'] }}
+</p>
+<a href="" onclick="window.history.go(-1); return false;">Go Back</a>
+{% endblock %}

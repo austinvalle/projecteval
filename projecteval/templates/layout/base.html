@@ -5,6 +5,7 @@
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" >
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         {% block javascript %}{% endblock %}
+        <title>Eval - {% block title %}{% endblock %}</title>
     </head>
     <body>
     	<div class="nav-bar">

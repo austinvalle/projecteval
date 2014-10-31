@@ -1,0 +1,10 @@
+{% extends "layout/base.html" %}
+{% block javascript %}{% endblock %}
+{% block title %}Platforms{% endblock %}
+{% block content %}
+<ul>
+    {% for platform in platforms %}
+    <li><a href="{{ url_for('platforms.platform_info', id=platform['id']) }}">{{ platform["name"] }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
