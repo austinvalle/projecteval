@@ -28,6 +28,9 @@ Installation
   - Psycopg2
     - *pip install psycopg2*
 
+  - Requests module
+    - *pip install requests*
+
 6. Run the project (*"python run.py"*)
 7. Open up pgAdmin III and run the game-testdata.sql insert script.
 8. Test the app 
