@@ -3,6 +3,7 @@
 from flask import Blueprint, request, jsonify, render_template, flash
 
 import json
+import time
 
 from projecteval import db
 
@@ -16,4 +17,7 @@ def check_response(response):
         ""
     else:
         redirect(url_for('error_controller.error_404'))
-        
+
+def convert_date_string(datestring):
+    readTime = time.strptime(datestring, "%a, %d %b %Y %H:%M:%S GMT")
+    return time.strftime("%m/%d/%Y", readTime)

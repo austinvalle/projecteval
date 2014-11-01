@@ -30,6 +30,7 @@ def game_info(id=None):
     helper.check_response(response)
     game = json.loads(response.data)
     game = game["game"]
+    game["release_date"] = helper.convert_date_string(game["release_date"])
     return render_template("games/game.html", game=game)
 
 

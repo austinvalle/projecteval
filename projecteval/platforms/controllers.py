@@ -30,4 +30,5 @@ def platform_info(id=None):
     helper.check_response(response)
     platform = json.loads(response.data)
     platform = platform["platform"]
+    platform["release_date"] = helper.convert_date_string(platform["release_date"])
     return render_template("platforms/platform.html", platform=platform)
