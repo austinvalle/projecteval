@@ -21,17 +21,17 @@ class Game(Base):
  	last_modified_by = db.Column(db.String(128), nullable=False)
  	last_modified = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-def __init__(self, title, desc, developer, publisher, trailer_url, added_by, last_modified_by):
-	self.title = title
-	self.desc = desc
-	self.developer = developer
-	self.publisher = publisher
-	self.trailer_url = trailer_url
-	self.added_by = added_by
-	self.last_modified_by = last_modified_by
+	def __init__(self, title, desc, developer, publisher, trailer_url, added_by, last_modified_by):
+		self.title = title
+		self.desc = desc
+		self.developer = developer
+		self.publisher = publisher
+		self.trailer_url = trailer_url
+		self.added_by = added_by
+		self.last_modified_by = last_modified_by
 
-def __repr__(self):
-	return '<Game %s>' % (self.title)
+	def __repr__(self):
+		return '<Game %s>' % (self.title)
 
 class Platform(Base):
 	__tablename__ = 'platform'
@@ -61,4 +61,19 @@ class Platform(Base):
 		self.storage = storage
 
 	def __repr__(self):
-		return '<Platform %s>' % (self.name)		
+		return '<Platform %s>' % (self.name)
+
+class ESRB(Base):
+	__tablename__ = 'esrb'	
+
+	short_desc = db.Column(db.String(128))
+	full_desc = db.Column(db.String(600))
+	image_url = db.Column(db.String(128))
+
+	def __init__(self, short_desc, full_desc, image_url):
+		self.short_desc = short_desc
+		self.full_desc = full_desc
+		self.image_url = image_url
+
+	def __repr__(self):
+		return '<ESRB %s>' % (self.short_desc)		
