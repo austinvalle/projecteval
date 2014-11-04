@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response, abort
 
 from projecteval import db
 
@@ -37,6 +37,9 @@ def all_games():
 @api.route('/api/games/<int:id>', methods=['GET'])
 def game_info(id):
 	game = Game.query.filter_by(id=id).first()
+
+	if(game == None):
+		abort(404)
 
 	json_result = {
 		'id': game.id,
@@ -87,6 +90,9 @@ def all_platforms():
 def platform_info(id):
 	platform = Platform.query.filter_by(id=id).first()
 
+	if(platform == None):
+		abort(404)
+
 	json_result = {
 		'id':platform.id,
 		'name':platform.name,
@@ -105,3 +111,8 @@ def platform_info(id):
 	}
 
 	return jsonify(platform=json_result)
+
+	# Error Handling
+	@app.errorhandler(404)
+	def not_found(error):
+		return make_response(jsonify({'error': 'Not found'}), 404)
