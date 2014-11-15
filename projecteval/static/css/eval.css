@@ -24,7 +24,29 @@ body {
 	text-decoration: none;
 	color: gray;
 }
-.game-content ul {
+.no-bullet {
 	list-style: none;
 	padding: 0px;
 }
+.display-inline li {
+    display: inline-block;
+    margin-right: 5px;
+}
+.small-img {
+    height: 25px;
+    width: 50px;
+}
+.no-underline {
+    text-decoration: none;
+}
+.bottom-margin {
+    margin-bottom: 10px;
+}
+.medium-img {
+    height: 75px;
+    width: 150px;
+}
+ul .li-right-margin {
+    margin-right: 20px;
+}
+

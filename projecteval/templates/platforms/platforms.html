@@ -2,9 +2,22 @@
 {% block javascript %}{% endblock %}
 {% block title %}Platforms{% endblock %}
 {% block content %}
-<ul>
+<h1>Platforms</h1>
+<ul class="no-bullet display-inline">
     {% for platform in platforms %}
-    <li><a href="{{ url_for('platforms.platform_info', id=platform['id']) }}">{{ platform["name"] }}</a></li>
+    <li class="li-right-margin">
+        <a href="{{ url_for('platforms.platform_info', id=platform['id']) }}" title="{{platform['name']}}" class="no-underline">
+            {% if platform['name'] == 'Xbox One' %}
+            <img src="{{ url_for('static', filename='images/xbox-one-logo.gif') }}" title="Xbox One" class="medium-img" />
+            {% elif platform['name'] == "Playstation 4" %}
+            <img src="{{ url_for('static', filename='images/ps4-logo.gif') }}" title="PS4" class="medium-img" />
+            {% elif platform['name'] == "Wii U" %}
+            <img src="{{ url_for('static', filename='images/wii-u-logo.gif') }}" title="Wii U" class="medium-img" />
+            {% else %}
+            {{ platform['name'] }}
+            {% endif %}
+        </a>
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}
