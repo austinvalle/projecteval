@@ -7,15 +7,7 @@
     {% for platform in platforms %}
     <li class="li-right-margin">
         <a href="{{ url_for('platforms.platform_info', id=platform['id']) }}" title="{{platform['name']}}" class="no-underline">
-            {% if platform['name'] == 'Xbox One' %}
-            <img src="{{ url_for('static', filename='images/xbox-one-logo.gif') }}" title="Xbox One" class="medium-img" />
-            {% elif platform['name'] == "Playstation 4" %}
-            <img src="{{ url_for('static', filename='images/ps4-logo.gif') }}" title="PS4" class="medium-img" />
-            {% elif platform['name'] == "Wii U" %}
-            <img src="{{ url_for('static', filename='images/wii-u-logo.gif') }}" title="Wii U" class="medium-img" />
-            {% else %}
-            {{ platform['name'] }}
-            {% endif %}
+            {{ macro.platform_list(platform['name'], 'medium-img') }}
         </a>
     </li>
     {% endfor %}

@@ -49,4 +49,26 @@ body {
 ul .li-right-margin {
     margin-right: 20px;
 }
-
+.container {
+    width: 100%;
+}
+.label {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.data {
+    font-size: 1.1em;
+}
+.right-column{
+    margin-left: 20px;
+    float: right;
+    display: table-cell;
+    padding: 5px;
+    border-left: 2px solid gray;
+}
+.left-column {
+    display: table-cell;
+}
+.clear-both {
+    clear: both;
+}

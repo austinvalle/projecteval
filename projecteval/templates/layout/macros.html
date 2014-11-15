@@ -1,0 +1,15 @@
+{% macro platform_list(platform_name, class='small-img') -%}
+    {% if platform_name == 'Xbox One' %}
+    <img src="{{ url_for('static', filename='images/xbox-one-logo.gif') }}" title="Xbox One" class="{{ class }}" />
+    {% elif platform_name == "Playstation 4" %}
+    <img src="{{ url_for('static', filename='images/ps4-logo.gif') }}" title="PS4" class="{{ class }}" />
+    {% elif platform_name == "Wii U" %}
+    <img src="{{ url_for('static', filename='images/wii-u-logo.gif') }}" title="Wii U" class="{{ class }}" />
+    {% else %}
+    {{ platform_name }}
+    {% endif %}
+{%- endmacro %}
+
+{% macro label_data(label, data) -%}
+    <span class="label">{{ label }}</span> <span class="data">{{ data }}</span>
+{%- endmacro %}
