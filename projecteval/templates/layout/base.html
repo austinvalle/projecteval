@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/eval.css') }}" type="text/css">
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" >
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/site.js') }}"></script>
         {% block javascript %}{% endblock %}
         <title>Eval - {% block title %}{% endblock %}</title>
     </head>
@@ -15,9 +16,11 @@
 			    <ul>
 				    <li><a href="{{ url_for('games.all_games') }}">Games</a></li>
 				    <li><a href="/platforms">Platforms</a></li>
+                    <li><input type="text" class="search-text-box" name="header-search-text-box" id="header-search-text-box" />
+                         <img src="{{ url_for('static', filename='images/search.png') }}" class="search-img" />
+                    </li>
 			    </ul>
 		    </nav>
-
 		    <div>
 			    <!--Login will go here-->
 		    </div>

@@ -13,3 +13,7 @@
 {% macro label_data(label, data) -%}
     <span class="label">{{ label }}</span> <span class="data">{{ data }}</span>
 {%- endmacro %}
+
+{% macro text_block(text) -%}
+    <div class="text-block">{{ text }}</div>
+{%- endmacro %}

@@ -2,26 +2,27 @@
 {% block javascript %}{% endblock %}
 {% block title %}{{ platform['name'] }}{% endblock %}
 {% block content %}
-<p>
-    Description: {{ platform['desc'] }}
-</p>
-<p>
-    Release Date: {{ platform['release_date'] }}
-</p>
-<p>
-    Developer: {{ platform['developer'] }}
-</p>
-<p>
-    CPU: {{ platform['cpu'] }}
-</p>
-<p>
-    Memory: {{ platform['memory'] }}
-</p>
-<p>
-    Graphics: {{ platform['graphics'] }}
-</p>
-<p>
-    Storage: {{ platform['storage'] }}
-</p>
+<h1>{{ platform['name'] }}</h1>
+    <div class="container">
+       <!--Right column-->
+        <div class="right-column">
+            
+            <ul class="no-bullet">
+                <li>{{ macro.platform_list(platform['name'], 'medium-img') }}</li>
+                <li>{{ macro.label_data('Release Date:', platform['release_date']) }}</li>
+                <li>{{ macro.label_data('Developer:', platform['developer']) }}</li>
+                <li>{{ macro.label_data('CPU:', platform['cpu']) }}</li>
+                <li>{{ macro.label_data('Memory:', platform['memory']) }}</li>
+                <li>{{ macro.label_data('Graphics:', platform['graphics']) }}</li>
+                <li>{{ macro.label_data('Storage:', platform['storage']) }}</li>
+            </ul>
+        </div>
+        <!--Left column-->
+        <div class="left-column">
+            {{ macro.text_block(platform['desc']) }}
+        </div>
+        <div class="clear-both">
+        </div>
+    </div>
 <a href="" onclick="window.history.go(-1); return false;">Go Back</a>
 {% endblock %}

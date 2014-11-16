@@ -22,7 +22,7 @@
         </div>
         <!--Left column-->
         <div class="left-column">
-            <p>{{ game['desc'] }}</p>
+            {{ macro.text_block(game['desc']) }}
             <p>Trailer: <a href="{{ game['trailer_url'] }}">{{ game['trailer_url'] }}</a></p>
         </div>
         <div class="clear-both">
