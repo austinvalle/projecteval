@@ -1,50 +1,25 @@
-{% macro render_field(field, placeholder=None) %}
-{% if field.errors %}
-<div>
-{% elif field.flags.error %}
-<div>
-{% else %}
-<div>
-{% endif %}
-    {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
-    {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
+<div class="login-container" id="login-container">
+    <a>Login/Register</a>
 </div>
-{% endmacro %}
-
-<div>
-  <div>
-    <legend>Sign in</legend>
-    {% with errors = get_flashed_messages(category_filter=["error"]) %}
-    {% if errors %}
-    <div>
-    {% for error in errors %}
-    {{ error }}<br>
-    {% endfor %}
+<div class="login-form-container" id="login-form-container">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token" />
+    <div class="table-cell-left">
+        <form method="POST" action="javascript:Login();" accept-charset="UTF-8" role="form" name="login_form" id="login_form">
+            <input type="text" name="login_email" id="login_email" value="" placeholder="Email Address" />
+            <input type="password" name="login_password" id="login_password" value="" placeholder="Password" />
+            <button type="submit" name="Login">Sign in</button>
+            <ul id="login_errors" class="no-bullet error-list-text"></ul>
+        </form>  
     </div>
-    {% endif %}
-    {% endwith %}
-
-    {% if form.errors %}
-    <div>
-    {% for field, error in form.errors.items() %}
-    {% for e in error %}
-    {{ e }}<br>
-    {% endfor %}
-    {% endfor %}
+    <div class="table-cell-right">
+        <form method="POST" action="javascript:Register();" accept-charset="UTF-8" role="form" name="login_form" id="login_form">
+            <input type="text" name="register_email" id="register_email" value="" placeholder="Email Address" />
+            <input type="text" name="register_username" id="register_username" value="" placeholder="User Name" />
+            <input type="password" name="register_password" id="register_password" value="" placeholder="Password" />
+            <input type="password" name="register_confirm_password" id="register_confirm_password" value="" placeholder="Confirm Password" />
+            <button type="submit" name="Register">Register</button>
+            <ul id="register_errors" class="no-bullet error-list-text"></ul>
+        </form>  
     </div>
-    {% endif %}
-    <form method="POST" action="." accept-charset="UTF-8" role="form">
-      {{ form.csrf_token }}
-      {{ render_field(form.email, placeholder="Your Email Address",
-                                  autofocus="") }}
-      {{ render_field(form.password, placeholder="Password") }}
-      <div>
-      <label>
-        <input type="checkbox" name="remember" value="1"> Remember Me
-      </label>
-      <a role="button" href="">Forgot your password?</a><span class="clearfix"></span>
-      </div>
-      <button type="submit" name="submit">Sign in</button>
-    </form>  
-  </div>
 </div>
+

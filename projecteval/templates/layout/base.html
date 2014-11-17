@@ -13,17 +13,21 @@
     	<div class="nav-bar">
 		    <header><a href="/"><img src="{{ url_for('static', filename='images/pylons-logo.gif') }}" /></a></header>
 		    <nav>
-			    <ul>
+			    <ul class="nav-bar-ul">
 				    <li><a href="{{ url_for('games.all_games') }}">Games</a></li>
 				    <li><a href="/platforms">Platforms</a></li>
                     <li><input type="text" class="search-text-box" name="header-search-text-box" id="header-search-text-box" />
                          <img src="{{ url_for('static', filename='images/search.png') }}" class="search-img" />
                     </li>
+                    <li class="nav-bar-right">
+                        {% if session['user_id'] is not none %}
+                        {% include "auth/logout.html" %}
+                        {% else %}
+                        {% include "auth/login.html" %}
+                        {% endif %}
+                    </li>
 			    </ul>
 		    </nav>
-		    <div>
-			    <!--Login will go here-->
-		    </div>
 	    </div>
         <div id="content">
             {% block content %}{% endblock %}

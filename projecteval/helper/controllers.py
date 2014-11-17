@@ -8,6 +8,8 @@ import time
 from projecteval import db
 
 from projecteval.api.models import Game, Platform
+from projecteval.auth.forms import LoginForm
+from projecteval.auth.models import User
 
 import projecteval.errors.controllers as error_controller
 
@@ -21,3 +23,6 @@ def check_response(response):
 def convert_date_string(datestring):
     readTime = time.strptime(datestring, "%a, %d %b %Y %H:%M:%S GMT")
     return time.strftime("%m/%d/%Y", readTime)
+
+def get_login_form():
+    return LoginForm(request.login_form)

@@ -1,0 +1,4 @@
+<div class="logout-container">
+    Welcome {{ session['user_name'] }}! <a onclick="javascript: Logout();">Logout</a>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token" />
+</div>

@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask_wtf.csrf import CsrfProtect
 
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -31,4 +32,5 @@ projecteval.register_blueprint(platform_module)
 projecteval.register_blueprint(error_module)
 projecteval.register_blueprint(home_module)
 
+CsrfProtect(projecteval)
 db.create_all()
