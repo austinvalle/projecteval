@@ -1,5 +1,5 @@
 <div class="login-container" id="login-container">
-    <a>Login/Register</a>
+    <a data-title="test">Login/Register</a>
 </div>
 <div class="login-form-container" id="login-form-container">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token" />
@@ -12,14 +12,16 @@
         </form>  
     </div>
     <div class="table-cell-right">
-        <form method="POST" action="javascript:Register();" accept-charset="UTF-8" role="form" name="login_form" id="login_form">
-            <input type="text" name="register_email" id="register_email" value="" placeholder="Email Address" />
-            <input type="text" name="register_username" id="register_username" value="" placeholder="User Name" />
-            <input type="password" name="register_password" id="register_password" value="" placeholder="Password" />
-            <input type="password" name="register_confirm_password" id="register_confirm_password" value="" placeholder="Confirm Password" />
+        <form method="POST" action="javascript:Register();" accept-charset="UTF-8" role="form" name="login_form" id="login_form">        
+            {{ macro.tool_tip('Please enter your email address', '<input type="text" class="input-hover" name="register_email" id="register_email" value="" placeholder="Email Address" />') }}
+            {{ macro.tool_tip('Please enter a user name between 6 and 25 characters long. Only letters and numbers', '<input type="text" name="register_username" id="register_username" value="" placeholder="User Name" />') }}
+            {{ macro.tool_tip('Please enter a password with at least one lower case letter, one upper case letter, and one number. Can be between 6-25 characters long', '<input type="password" name="register_password" id="register_password" value="" placeholder="Password" />') }}
+            {{ macro.tool_tip('Please enter the same password as above', '<input type="password" name="register_confirm_password" id="register_confirm_password" value="" placeholder="Confirm Password" />') }}
+            
             <button type="submit" name="Register">Register</button>
             <ul id="register_errors" class="no-bullet error-list-text"></ul>
         </form>  
     </div>
 </div>
+
 

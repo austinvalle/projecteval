@@ -1,4 +1,8 @@
 var canSlide = true;
+var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+var userNameRegex = /^[a-zA-Z][a-zA-Z0-9]{5,24}$/; // starts with letter, between 6 and 25 chars long
+var passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}/ // at least one number, one lower case letter, one upper case letter, and 6-25 chars long
+
 
 $(document).ready(function(){
     $(".search-img").mouseenter(function() {
@@ -13,6 +17,7 @@ $(document).ready(function(){
         ToggleLoginDisplay();
     });
 
+    SetUpValidation();
 });
 
 // Login section //
@@ -38,17 +43,20 @@ function ToggleLoginDisplay() {
 }
 
 function Login() {
-    var form = { "email": $("#login_email").val(), "password": $("#login_password").val(), "csrf_token" : $("#csrf_token").val() };
-    
-    $.ajax({
-        type:"POST",
-        url:"http://0.0.0.0:8080/login/",
-        data:form,
-        //dataType:"application/json;charset=UTF-8",
-        success: function(response) {
-                ReadLoginResponse(response, true);
-            }
-    });
+    if (ValidateLoginControls())
+    {
+        var form = { "email": $("#login_email").val(), "password": $("#login_password").val(), "csrf_token" : $("#csrf_token").val() };
+        
+        $.ajax({
+            type:"POST",
+            url:"http://0.0.0.0:8080/login/",
+            data:form,
+            //dataType:"application/json;charset=UTF-8",
+            success: function(response) {
+                    ReadLoginResponse(response, true);
+                }
+        });
+    }
 }
 
 function ReadLoginResponse(response, isLogin) {
@@ -71,7 +79,7 @@ function ReadLoginResponse(response, isLogin) {
 }
 
 function Register() {
-    if ($("#register_password").val() == $("#register_confirm_password").val())
+    if (ValidateRegisterControls())
     {
         var form = { "email": $("#register_email").val(), "username": $("#register_username").val(), "password": $("#register_password").val(), "csrf_token" : $("#csrf_token").val() };
         
@@ -91,6 +99,87 @@ function Register() {
     }
 }
 
+function ValidateRegisterControls() {
+    var rv = true;
+    if (!Validate($("#register_email"), emailRegex)) 
+    {
+        rv = false;
+    }
+    if (!Validate($("#register_username"), userNameRegex)) 
+    {
+        rv = false;
+    }
+    if (!Validate($("#register_password"), passwordRegex)) 
+    {
+        rv = false;
+    }
+    if (!Validate($("#register_confirm_password"), passwordRegex)) 
+    {
+        rv = false;
+    }
+    return rv;
+}
+
+function ValidateLoginControls() {
+    var rv = true;
+    if (!Validate($("#login_email"), emailRegex)) 
+    {
+        rv = false;
+    }
+    if (!Validate($("#login_password"), passwordRegex)) 
+    {
+        rv = false;
+    }
+
+    return rv;
+}
+
+function SetUpValidation() {
+    $("#register_email").keyup(function() {
+        Validate($(this), emailRegex);
+    });
+
+    $("#login_email").keyup(function() {
+        Validate($(this), emailRegex);
+    });
+
+    $("#register_username").keyup(function() {
+        Validate($(this), userNameRegex);
+    });
+
+    $("#register_password").keyup(function() {
+        Validate($(this), passwordRegex);
+    });
+
+    $("#register_confirm_password").keyup(function() {
+        Validate($(this), passwordRegex, $("#register_password").val());
+    });
+    
+    $("#login_password").keyup(function() {
+        Validate($(this), passwordRegex);
+    });
+}
+
+function IsValid(value, regex) {
+    if (value == "" || !regex.test(value))
+    {
+        return false;
+    }
+    return true;
+}
+
+function Validate(input, regex, compareValue) {
+    if (!IsValid(input.val(), regex) || (compareValue != undefined && input.val() != compareValue))
+    {
+        input.addClass("red-border");
+        return false;
+    }
+    else
+    {
+        input.removeClass("red-border");
+        return true;
+    }
+}
 // End login section //
 
 

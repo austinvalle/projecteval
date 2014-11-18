@@ -18,6 +18,13 @@
     <div class="text-block">{{ text }}</div>
 {%- endmacro %}
 
+{% macro tool_tip(tool_tip_text, input_element) %}
+    <div class="tool-tip-wrapper">
+        {{ input_element|safe }}
+        <span class="tool-tip">{{ tool_tip_text }}</span>
+    </div>
+{%- endmacro %}
+
 {% macro render_field(field, placeholder=None) %}
     {% if field.errors %}
     <div>

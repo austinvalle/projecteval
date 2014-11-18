@@ -84,6 +84,42 @@ h1 {
     vertical-align: middle;
 }
 
+/* Tool tip */ 
+
+.tool-tip-wrapper {
+    position: relative;
+}
+
+.tool-tip-wrapper:hover>.tool-tip {
+    background: #660033;
+    border-radius: 4px;
+    text-align: left;
+    top: 40px;
+    color: white;
+    display: block;
+    height: auto;
+    right: 0;
+    max-width: 300px;
+    line-height: 15px;
+    position: absolute;
+}
+
+.tool-tip-wrapper:hover>.tool-tip:before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0px;
+    width: 0; 
+	height: 0;
+}
+
+.tool-tip {
+    display: none;
+    padding: 5px;
+    z-index: 20;
+}
+
+
 .table-cell-left {
     background-color:#386E38;
     display: table-cell;
@@ -97,6 +133,10 @@ h1 {
     text-align: right;
     padding: 5px;
     border-left: 3px solid #24246B;
+}
+
+.red-border {
+    border: 1px solid red;
 }
 
 /* Logout */
