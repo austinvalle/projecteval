@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template, flash
+from flask import Blueprint, request, jsonify, render_template, flash, session, url_for, redirect
 
 import json
 
@@ -32,5 +32,18 @@ def game_info(id=None):
     game = game["game"]
     game["release_date"] = helper.convert_date_string(game["release_date"])
     return render_template("games/game.html", game=game)
+
+@games.route('/edit/games/<int:id>', methods=['GET'])
+def edit_game(id=None):
+    if (id is None):
+        return redirect(url_for('games.all_games'), 302)
+    if (not session["user_id"]):
+        return redirect(url_for('games.game_info', id=id), 302)
+    response = api.game_info(id)
+    helper.check_response(response)
+    game = json.loads(response.data)
+    game = game["game"]
+    game["release_date"] = helper.convert_date_string(game["release_date"])
+    return render_template("edit/edit_game.html", game=game)
 
 

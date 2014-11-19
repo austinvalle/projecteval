@@ -58,11 +58,11 @@ def register():
             # insert user
             dbsession = db.session()
             user = User(username, email, generate_password_hash(password))
-            user_id = dbsession.add(user)
+            dbsession.add(user)
             dbsession.commit()
 
-            session['user_id'] = user_id
-            session['user_name'] = username
+            session['user_id'] = user.id
+            session['user_name'] = user.username
             return jsonify({"success":"true", "username":user.username})   
     else:
         wtf_errors_to_json(form, errors)

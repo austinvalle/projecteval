@@ -20,7 +20,7 @@
                          <img src="{{ url_for('static', filename='images/search.png') }}" class="search-img" />
                     </li>
                     <li class="nav-bar-right">
-                        {% if session['user_id'] is not none and session['user_name'] != '' %}
+                        {% if session['user_id'] and session['user_name'] %}
                         {% include "auth/logout.html" %}
                         {% else %}
                         {% include "auth/login.html" %}

@@ -90,7 +90,7 @@ h1 {
     position: relative;
 }
 
-.tool-tip-wrapper:hover>.tool-tip {
+.tool-tip-wrapper>input:focus:hover+.tool-tip {
     background: #660033;
     border-radius: 4px;
     text-align: left;
@@ -104,7 +104,7 @@ h1 {
     position: absolute;
 }
 
-.tool-tip-wrapper:hover>.tool-tip:before {
+.tool-tip-wrapper>input:focus:hover+.tool-tip:before {
     display: block;
     content: "";
     position: absolute;
@@ -147,6 +147,21 @@ h1 {
 
 .logout-container>a {
     cursor: pointer;
+}
+
+/* Edit Section */
+
+.edit-textarea {
+    width: 60vw;
+    height: 20vw;
+}
+
+.large-input {
+    width: 500px;
+}
+
+.normal-input {
+    width: 200px;
 }
 
 /* General */
