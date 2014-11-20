@@ -2,10 +2,15 @@
 body {
 	background-color: white;
 	color: black;
-	margin: 20px 20px;
+	margin: 0px 20px;
     font-family: Verdana, Geneva, sans-serif;
     color: #333333;
     font-size: 14px;
+}
+
+input , textarea , select , button {
+    font-family: inherit;
+    font-size: inherit;
 }
 
 h1 {
@@ -152,8 +157,9 @@ h1 {
 /* Edit Section */
 
 .edit-textarea {
-    width: 60vw;
-    height: 20vw;
+    width: 50vw;
+    height: 10vw;
+    resize: both;
 }
 
 .large-input {

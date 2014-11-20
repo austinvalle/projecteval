@@ -10,16 +10,16 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro platform_list_check(platform_name, platform_id, id, checked='checked', class='') -%}
-    <input type="checkbox" name="{{ id }}" id="{{ id }}" value="{{ platform_id }}" {% if checked == 'checked' %} checked="checked" {% endif %}/>{{ platform_list(platform_name) }}
+{% macro platform_list_check(platform_name, platform_id, id, class='', checked='checked') -%}
+    <input type="checkbox" name="{{ id }}" id="{{ id }}" value="{{ platform_id }}" class="{{ class }}" {% if checked == 'checked' %} checked="checked" {% endif %}/>{{ platform_list(platform_name) }}
 {%- endmacro %}
 
 {% macro label_data(label, data) -%}
     <span class="label">{{ label }}</span> <span class="data">{{ data }}</span>
 {%- endmacro %}
 
-{% macro label_data_edit(label, data, id, class='normal-input') -%}
-    <span class="label">{{ label }}</span> <input type="text" name="{{ id }}" id="{{ id }}" class="{{ class }}" value="{{ data }}">
+{% macro label_data_edit(label, data, id, class='normal-input', readonly='') -%}
+    <span class="label">{{ label }}</span> <input type="text" name="{{ id }}" id="{{ id }}" class="{{ class }}" value="{{ data }}" {{ readonly }} />
 {%- endmacro %}
 
 {% macro text_block(text) -%}

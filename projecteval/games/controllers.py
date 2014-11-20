@@ -46,4 +46,10 @@ def edit_game(id=None):
     game["release_date"] = helper.convert_date_string(game["release_date"])
     return render_template("edit/edit_game.html", game=game)
 
+@games.route('/edit/games/', methods=['POST'])
+def save_game():
+    if (not session["user_id"]):
+        return redirect(url_for('games.all_games'), 302)
+    return jsonify({ "success" : "true", "errors" : [] })
+
 

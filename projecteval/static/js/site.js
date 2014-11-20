@@ -1,7 +1,9 @@
 var canSlide = true;
 var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var userNameRegex = /^[a-zA-Z][a-zA-Z0-9]{5,24}$/; // starts with letter, between 6 and 25 chars long
-var passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}/ // at least one number, one lower case letter, one upper case letter, and 6-25 chars long
+var passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}/; // at least one number, one lower case letter, one upper case letter, and 6-25 chars long
+var dateRegex = /^(\d){1,2}\/(\d){1,2}\/(\d){4}$/;
+var urlRegex = /^([a-z][a-z0-9\*\-\.]*):\/\/(?:(?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*(?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@)?(?:(?:[a-z0-9\-\.]|%[0-9a-f]{2})+|(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\]))(?::[0-9]+)?(?:[\/|\?](?:[\w#!:\.\?\+=&@!$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})*)?$/
 
 
 $(document).ready(function(){
@@ -17,7 +19,8 @@ $(document).ready(function(){
         ToggleLoginDisplay();
     });
 
-    SetUpValidation();
+    SetUpAuthValidation();
+    SetUpEditGameValidation();
 });
 
 // Login section //
@@ -134,7 +137,7 @@ function ValidateLoginControls() {
     return rv;
 }
 
-function SetUpValidation() {
+function SetUpAuthValidation() {
     $("#register_email").keyup(function() {
         Validate($(this), emailRegex);
     });
@@ -171,14 +174,39 @@ function IsValid(value, regex) {
 function Validate(input, regex, compareValue) {
     if (!IsValid(input.val(), regex) || (compareValue != undefined && input.val() != compareValue))
     {
-        input.addClass("red-border");
+        ToggleDisplayError(true, input);
         return false;
     }
     else
     {
-        input.removeClass("red-border");
+        ToggleDisplayError(false, input);
         return true;
     }
+}
+
+function ToggleDisplayError(addError, element) {
+    if (addError)
+    {
+        element.addClass("red-border");
+    }
+    else
+    {
+        element.removeClass("red-border");
+    }
+}
+
+function DateValidate(input, regex, compareValue) {
+    if (Validate(input, regex, compareValue))
+    {
+        var timeStamp = Date.parse(input.val());
+        if (isNaN(timeStamp))
+        {
+            ToggleDisplayError(true, input);
+            return false;
+        }
+        return true;
+    }
+    return false;
 }
 // End login section //
 
@@ -234,3 +262,75 @@ function SlideSearch(slideLeft) {
     }
 }
 // End search button section //
+
+
+// Start Edit Game section //
+
+function SaveGame() {
+    if (ValidateEditGameControls())
+    {
+        var form = BuildGameForm();
+        
+        $.ajax({
+            type:"POST",
+            url:"http://0.0.0.0:8080/edit/games/",
+            data:form,
+            //dataType:"application/json;charset=UTF-8",
+            success: function(response) {
+                    ReadSaveGameReponse(response);
+                }
+        });
+    }
+}
+
+function BuildGameForm() {
+    var platforms = [];
+    $(".game_platform_input").each(function() {
+        if ($(this).prop("checked"))
+        {
+            platforms.push({ "id" : $(this).val() });
+        }
+    });
+    return { "csrf_token" : $("#csrf_token").val(),
+             "desc" : $("#game_desc").val(),
+             "id" : $("#game_id").val(),
+             "title" : $("#game_title").val(),
+             "release_date" : $("#game_release_date").val(),
+             "developer" : $("#game_developer").val(),
+             "publisher" : $("#game_publisher").val(),
+             "trailer" : $("#game_trailer").val(),
+             "platforms" : platforms
+           }
+}
+
+function SetUpEditGameValidation() {
+    $("#game_release_date").keyup(function() {
+        DateValidate($(this), dateRegex)
+    });
+
+    $("#game_trailer").keyup(function() {
+        Validate($(this), urlRegex);
+    });
+}
+
+function ValidateEditGameControls() {
+    var returnValue = true;
+    
+    if (!DateValidate($("#game_release_date"), dateRegex))
+    {
+        returnValue = false;
+    }
+    if (!Validate($("#game_trailer"), urlRegex))
+    {
+        returnValue = false;
+    }
+
+    return returnValue;
+}
+
+function ReadSaveGameReponse(response) {
+    alert(response);
+}
+
+
+// End Edit Game section //

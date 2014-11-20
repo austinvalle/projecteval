@@ -1,36 +1,42 @@
 {% extends "layout/base.html" %}
 
-{% block javascript %}
-<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script> <!--using NiceEdit-->
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>				
-{% endblock %}
+{% block javascript %}{% endblock %}
 {% block title %}Edit - {{ game['title'] }}{% endblock %}
 {% block content %}
-<h1>{{ macro.label_data_edit('Title:', game['title'], 'title', 'normal-input') }}</h1>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token" />
+<form method="POST" action="javascript:SaveGame();" accept-charset="UTF-8" role="form" name="edit_game_form" id="edit_game_form">
+<input type="hidden" name="game_id" id="game_id" value="{{ game['id'] }}" />
+<h1>{{ macro.label_data_edit('Title:', game['title'], 'game_title', 'normal-input', 'readonly') }}</h1><!--To do: check if adding game, otherwise keep title read only -->
     <div class="container">
        <!--Right column-->
         <div class="right-column">
             <!--Platform List-->
             <ul class="no-bullet"> <!--To do: link platform with game...waiting on API for that-->
-                <li>{{ macro.platform_list_check('Xbox One', 1, 'platform_1') }}</li>
-                <li>{{ macro.platform_list_check('Playstation 4', 2, 'platform_2') }}</li>
-                <li>{{ macro.platform_list_check('Wii U', 3, 'platform_3') }}</li>
+                <li>{{ macro.platform_list_check('Xbox One', 1, 'game_platform_1', 'game_platform_input') }}</li>
+                <li>{{ macro.platform_list_check('Playstation 4', 2, 'game_platform_2', 'game_platform_input') }}</li>
+                <li>{{ macro.platform_list_check('Wii U', 3, 'game_platform_3', 'game_platform_input') }}</li>
             </ul>
             <ul class="no-bullet">
 
-                <li>{{ macro.label_data_edit('Release Date:', game['release_date'], 'release_date', 'normal-input') }}</li>
-                <li>{{ macro.label_data_edit('Developer:', game['developer'], 'developer', 'normal-input') }}</li>
-                <li>{{ macro.label_data_edit('Publisher:', game['publisher'], 'publisher', 'normal-input') }}</li>
+                <li>{{ macro.label_data_edit('Release Date:', game['release_date'], 'game_release_date', 'normal-input') }}</li>
+                <li>{{ macro.label_data_edit('Developer:', game['developer'], 'game_developer', 'normal-input') }}</li>
+                <li>{{ macro.label_data_edit('Publisher:', game['publisher'], 'game_publisher', 'normal-input') }}</li>
             </ul>
         </div>
         <!--Left column-->
         <div class="left-column">
-            <textarea class="edit-textarea">{{ game['desc'] }}</textarea>
-            <p>{{ macro.label_data_edit('Trailer:', game['trailer_url'], 'trailer_url', 'large-input') }}</p>
+            <div class="text-block">
+                <span class="label">Description:</span><br />
+                <textarea class="edit-textarea" id="game_desc" name="game_desc">{{ game['desc'] }}</textarea>
+            </div>
+            <p>{{ macro.label_data_edit('Trailer:', game['trailer_url'], 'game_trailer', 'large-input') }}</p>
+            <button type="submit" name="Save">Save Game</button>
+            </form>
         </div>
         <div class="clear-both">
         </div>
     </div>
+
 
 <a href="" onclick="window.history.go(-1); return false;">Go Back</a>
 {% endblock %}
