@@ -18,18 +18,18 @@
             </ul>
             <ul class="no-bullet">
 
-                <li>{{ macro.label_data_edit('Release Date:', game['release_date'], 'game_release_date', 'normal-input') }}</li>
-                <li>{{ macro.label_data_edit('Developer:', game['developer'], 'game_developer', 'normal-input') }}</li>
-                <li>{{ macro.label_data_edit('Publisher:', game['publisher'], 'game_publisher', 'normal-input') }}</li>
+                <li>{{ macro.tool_tip("Please enter an accurate date", macro.label_data_edit('Release Date:', game['release_date'], 'game_release_date', 'normal-input')) }}</li>
+                <li>{{ macro.tool_tip("Please enter a developer", macro.label_data_edit('Developer:', game['developer'], 'game_developer', 'normal-input')) }}</li>
+                <li>{{ macro.tool_tip("Please enter a publisher", macro.label_data_edit('Publisher:', game['publisher'], 'game_publisher', 'normal-input')) }}</li>
             </ul>
         </div>
         <!--Left column-->
         <div class="left-column">
             <div class="text-block">
                 <span class="label">Description:</span><br />
-                <textarea class="edit-textarea" id="game_desc" name="game_desc">{{ game['desc'] }}</textarea>
+                {{ macro.tool_tip("Please enter the description. This is not for walkthroughs, tips, or opinions, just the description", '<textarea class="edit-textarea" id="game_desc" name="game_desc">' + game['desc'] + '</textarea>') }}
             </div>
-            <p>{{ macro.label_data_edit('Trailer:', game['trailer_url'], 'game_trailer', 'large-input') }}</p>
+            <p>{{ macro.tool_tip("Please enter the trailer's url", macro.label_data_edit('Trailer:', game['trailer_url'], 'game_trailer', 'large-input')) }}</p>
             <button type="submit" name="Save">Save Game</button>
             </form>
         </div>

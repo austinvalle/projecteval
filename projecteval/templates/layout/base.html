@@ -13,13 +13,13 @@
     	<div class="nav-bar">
 		    <header><a href="/"><img src="{{ url_for('static', filename='images/pylons-logo.gif') }}" /></a></header>
 		    <nav>
-			    <ul class="nav-bar-ul">
+			    <ul class="nav-bar-ul" id="nav-bar-ul">
 				    <li><a href="{{ url_for('games.all_games') }}">Games</a></li>
 				    <li><a href="/platforms">Platforms</a></li>
-                    <li><input type="text" class="search-text-box" name="header-search-text-box" id="header-search-text-box" />
-                         <img src="{{ url_for('static', filename='images/search.png') }}" class="search-img" />
+                    <li id="nav-search-container"><input type="text" class="search-text-box" name="header-search-text-box" id="header-search-text-box" />
+                         <img src="{{ url_for('static', filename='images/search.png') }}" class="search-img" id="search-img" />
                     </li>
-                    <li class="nav-bar-right">
+                    <li class="nav-bar-right" id="nav-bar-right">
                         {% if session['user_id'] and session['user_name'] %}
                         {% include "auth/logout.html" %}
                         {% else %}
@@ -31,6 +31,12 @@
 	    </div>
         <div id="content">
             {% block content %}{% endblock %}
+        </div>
+        <div id="pop-up">
+            <img id="pop-up-x" src="{{ url_for('static', filename='images/x.png') }}" />
+            <div id="pop-up-content"></div>
+        </div>
+        <div id="gray-out">
         </div>
     </body>
 </html>

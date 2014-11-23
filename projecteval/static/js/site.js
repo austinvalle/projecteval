@@ -1,10 +1,12 @@
 var canSlide = true;
+var popUpTimer = setTimeout("",0);
+var popUpExeFunction = function() { };
 var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var userNameRegex = /^[a-zA-Z][a-zA-Z0-9]{5,24}$/; // starts with letter, between 6 and 25 chars long
 var passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}/; // at least one number, one lower case letter, one upper case letter, and 6-25 chars long
 var dateRegex = /^(\d){1,2}\/(\d){1,2}\/(\d){4}$/;
 var urlRegex = /^([a-z][a-z0-9\*\-\.]*):\/\/(?:(?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*(?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+@)?(?:(?:[a-z0-9\-\.]|%[0-9a-f]{2})+|(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\]))(?::[0-9]+)?(?:[\/|\?](?:[\w#!:\.\?\+=&@!$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})*)?$/
-
+var notEmptyRegex = /^(?!\s*$).+/
 
 $(document).ready(function(){
     $(".search-img").mouseenter(function() {
@@ -19,9 +21,45 @@ $(document).ready(function(){
         ToggleLoginDisplay();
     });
 
+    $(window).resize(function() {
+        FixLoginLocation();
+        FixContextColumns();
+    });
+    FixLoginLocation();
+    FixContextColumns();
+
     SetUpAuthValidation();
     SetUpEditGameValidation();
+    SetUpPopUpHandlers();
 });
+
+// Nav Bar //
+
+function FixLoginLocation() {
+    var searchContainerPos = $("#nav-search-container").position();
+    var navContainerPos = $("#nav-bar-ul").position();
+    var searchContainerWidth = $("#nav-search-container").width();
+    var navContainerWidth = $("#nav-bar-ul").width();
+    var loginWidth = $("#nav-bar-right").width();
+
+    if (searchContainerPos.left + searchContainerWidth > navContainerPos.left + navContainerWidth - loginWidth - 43)
+    {
+        $(".nav-bar-ul>.nav-bar-right").css("float", "none");
+        $("#login-form-container").css("top", "24px");
+        $("#login-form-container").css("left", "0px");
+        $("#login-form-container").css("right", "auto");
+    }
+    else
+    {
+        $(".nav-bar-ul>.nav-bar-right").css("float", "right");
+        $("#login-form-container").css("top", "");
+        $("#login-form-container").css("left", "");
+        $("#login-form-container").css("right", "");
+    }
+
+}
+
+// End Nav Bar //
 
 // Login section //
 
@@ -220,7 +258,7 @@ function Logout() {
     data: { "csrf_token" : $("#csrf_token").val() },
     //dataType:"application/json;charset=UTF-8",
     success: function(response) {
-            window.location.reload();
+            ShowPopUp("You logged out. Please feel free to come back!", function() { return window.location.reload() });
         }
     });
 }
@@ -249,7 +287,7 @@ function SlideSearch(slideLeft) {
         JustSlid();
         $("#header-search-text-box").css("display", "inline-block");
         $("#header-search-text-box").css("width", "0px");
-        $("#header-search-text-box").animate({"width":"+=150"}, 500);
+        $("#header-search-text-box").animate({"width":"+=150"}, 500, function() { FixLoginLocation() });
         
     }
     else
@@ -258,6 +296,7 @@ function SlideSearch(slideLeft) {
         JustSlid();
         $("#header-search-text-box").animate({"width":"-=150"}, 500, function() {
             $("#header-search-text-box").css("display", "none");
+            FixLoginLocation();
         });
     }
 }
@@ -311,6 +350,23 @@ function SetUpEditGameValidation() {
     $("#game_trailer").keyup(function() {
         Validate($(this), urlRegex);
     });
+
+    $("#game_developer").keyup(function() {
+        Validate($(this), notEmptyRegex);
+    });
+
+    $("#game_publisher").keyup(function() {
+        Validate($(this), notEmptyRegex);
+    });
+
+    $("#game_title").keyup(function() {
+        Validate($(this), notEmptyRegex);
+    });
+
+    $("#game_desc").keyup(function() {
+        Validate($(this), notEmptyRegex);
+    });
+
 }
 
 function ValidateEditGameControls() {
@@ -324,13 +380,92 @@ function ValidateEditGameControls() {
     {
         returnValue = false;
     }
+    if (!Validate($("#game_developer"), notEmptyRegex))
+    {
+        returnValue = false;
+    }
+    if (!Validate($("#game_publisher"), notEmptyRegex))
+    {
+        returnValue = false;
+    }
+    if (!Validate($("#game_title"), notEmptyRegex))
+    {
+        returnValue = false;
+    }
+    if (!Validate($("#game_desc"), notEmptyRegex))
+    {
+        returnValue = false;
+    }
 
     return returnValue;
 }
 
 function ReadSaveGameReponse(response) {
-    alert(response);
+    var jsonResponse = $.parseJSON(JSON.stringify(response));
+    if (jsonResponse.success == "true")
+    {
+        ShowPopUp("Game Saved!", window.location.reload);
+    }
+    else
+    {
+        ShowPopUp("Something went wrong and we couldn't save the game!", function() { return window.location.reload() });
+    }
 }
 
 
 // End Edit Game section //
+
+// Game and Platform //
+
+function FixContextColumns() {
+    var leftPos = $(".left-column").position();
+    var rightPos = $(".right-column").position();
+    console.log(leftPos.top  + " : " + rightPos.top);
+    if (leftPos.top > rightPos.top)
+    {
+        $(".right-column").css("float", "left");
+        $(".right-column").css("margin-right", "20px");
+        $(".right-column").css("margin-left", "0px");
+    }
+    else
+    {
+        $(".right-column").css("float", "");
+        $(".right-column").css("margin-right", "");
+        $(".right-column").css("margin-left", "");
+    }
+
+}
+
+
+//
+
+// Pop up section //
+function SetUpPopUpHandlers() {
+    $("#pop-up").hover(function() {
+            clearTimeout(popUpTimer); }, 
+        function() {
+            popUpTimer = setTimeout(function(fun) { return function() { ClosePopUp(fun) } }(popUpExeFunction), 3000);
+        }
+    );
+
+    $("#pop-up-x").click(function() {
+        clearTimeout(popUpTimer);
+        ClosePopUp(popUpExeFunction);
+    });
+}
+
+function ShowPopUp(text, exeFunction) {
+    clearTimeout(popUpTimer);
+    $("#pop-up-content").html(text);
+    $("#pop-up").addClass("display-pop-up");
+    $("#gray-out").addClass("display-gray-out");
+    popUpExeFunction = exeFunction;
+    popUpTimer = setTimeout(function(fun) { return function() { ClosePopUp(fun) } }(popUpExeFunction), 3000);
+}
+
+function ClosePopUp(exeFunction) {
+    $("#pop-up").removeClass("display-pop-up");
+    $("#gray-out").removeClass("display-gray-out");
+    $("#pop-up-content").html("");
+    exeFunction();
+}
