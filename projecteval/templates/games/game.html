@@ -18,16 +18,42 @@
                 <li>{{ macro.label_data('Release Date:', game['release_date']) }}</li>
                 <li>{{ macro.label_data('Developer:', game['developer']) }}</li>
                 <li>{{ macro.label_data('Publisher:', game['publisher']) }}</li>
+                <li>{{ macro.label_data('Average Rating:', '8', macro.rating_color(8)) }}</li>
             </ul>
         </div>
         <!--Left column-->
         <div class="left-column">
-            {{ macro.text_block(game['desc']) }}
-            <div>Trailer: <a href="{{ game['trailer_url'] }}">{{ game['trailer_url'] }}</a></div>
+            <div class="section-block">
+                <h2>Game Information</h2>
+                {{ macro.text_block(game['desc']) }}
+                <div><span class="label">Trailer:</span> <span class="data"><a href="{{ game['trailer_url'] }}">{{ game['trailer_url'] }}</a></span></div>
+                {% if session['user_id'] and session['user_name'] %}
+                    <div class="small-top-margin"><a href="{{ url_for('games.edit_game', id=game['id']) }}"><button>Edit Game</button></a></div>
+                {% endif %}
+            </div>
+            <div class="section-block no-background">
+                <h2>Tips</h2>
+                <ul class="no-indent">
+                    <li>Be awesome</li>
+                    <li>Play awesome</li>
+                    <li>Kill more than you die</li>
+                </ul>
+            </div>
+            <div class="section-block">
+                <h2>Reviews</h2>
+                <ul class="no-bullet review">
+                    <li>{{ macro.review("CrazyEarl", 9, "Where are you Scrappy? SCRRRRAAPPPPYYY!") }}</li>
+                    <li>{{ macro.review("BoomBewm", 7, "Light the fuses bitches!") }}</li>
+                    <li>{{ macro.review("Cl4P-TP", 2, "Jack thought he could stop us with a door? HA! I was MADE to open doors!...STAIRS? NOOOOOOOOOOOOOOOOOOOOOO! Minon, you've got to go on without me! Do your master proud!") }}</li>
+                    <li>{{ macro.review("Scooter", 4, "Daisy, I like you a whole lot / More than that bandit liked spoonin' that ro-bot. / You are like a diamond in the rough / Or a flower surrounded by shrapnel and stuff. / I will hang myself from my own tombstone / if in you, I can't put my bone.") }}</li>
+                </ul>
+            </div>
         </div>
         <div class="clear-both">
         </div>
     </div>
 
-<a href="" onclick="window.history.go(-1); return false;">Go Back</a>
+<div>
+    <a href="" onclick="window.history.go(-1); return false;">Go Back</a>
+</div>
 {% endblock %}

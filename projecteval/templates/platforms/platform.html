@@ -19,10 +19,14 @@
         </div>
         <!--Left column-->
         <div class="left-column">
-            {{ macro.text_block(platform['desc']) }}
+            <div class="section-block">
+                {{ macro.text_block(platform['desc']) }}
+            </div>
         </div>
         <div class="clear-both">
         </div>
     </div>
-<a href="" onclick="window.history.go(-1); return false;">Go Back</a>
+<div>
+    <a href="" onclick="window.history.go(-1); return false;">Go Back</a>
+</div>
 {% endblock %}

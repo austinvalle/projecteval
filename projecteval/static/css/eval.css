@@ -22,6 +22,10 @@ h1 {
     border-bottom: 1px solid #E0E0E0;
 }
 
+h2 {
+    margin-top: 0px;
+}
+
 /* Nav Bar */
 
 .nav-bar {
@@ -56,10 +60,16 @@ h1 {
 	color: gray;
 }
 
+.nav-bar-ul>#nav-search-container {
+    margin-right: 0px;
+    padding-right: 0px;
+}
+
 .nav-bar-ul>.nav-bar-right {
     float:right;
     display: inline-block;
     position: relative;
+    margin-right: 0px;
 }
 
 .search-img {
@@ -72,6 +82,7 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
     margin-bottom: 2px;
+    margin-right: 0px;
 }
 
 .search-text-box {
@@ -86,7 +97,7 @@ h1 {
     display: none;
     font-size: 14px;
     position: absolute;
-    top: 28px;
+    top: 26px;
     right: 0px;
     
     /*background-color: #99FFCC;*/
@@ -275,11 +286,23 @@ h1 {
     width: 200px;
 }
 
+/* Review Section */
+.review>li {
+    border: 1px solid #B3B3B3;
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
 /* General */
 
 .no-bullet {
 	list-style: none;
 	padding: 0px;
+}
+ul.no-indent {
+    padding: 0 20px;
 }
 .display-inline li {
     display: inline-block;
@@ -318,33 +341,53 @@ ul .li-right-margin {
 .right-column{
     margin-left: 20px;
     float: right;
-    display: table-cell;
+    display: block;
     padding: 15px;
     background-color: #E0E0E0;
     margin-bottom: 10px;
-    width: 200px;
+    width: 18%;
+    min-width: 200px;
 }
 .left-column {
-    display: table-cell;
+    display: block;
+    float: left;
     margin-bottom: 10px;
     min-width: 300px;
+    width: 75%;
+    /*background-color: #E0E0E0;*/
+    /*padding: 10px;*/
 }
-.clear-both:after {
+.clear-both {
     clear: both;
 }
-.clear-both:before, .clear-both:after {
-    content: " ";
-    display: inline;
-} 
+
 .text-block {
-    padding: 10px;
-    background-color: #E0E0E0;
+    padding: 10px 0px;
+    /*background-color: #E0E0E0;*/
     margin-bottom: 10px;
+}
+.section-block {
+    background-color: #E0E0E0;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.no-background {
+    background-color: white !important;
+    border: 1px solid #E0E0E0;
 }
 .error-list-text li {
     color: black !important;
     font-size: 1.0em !important;
 }
-
+.no-top-margin {
+    margin-top: 0px;
+}
+.underline {
+    border-bottom: 1px solid #E0E0E0;
+    margin-bottom: 5px;
+}
+.small-top-margin {
+    margin-top: 10px;
+}
 
 

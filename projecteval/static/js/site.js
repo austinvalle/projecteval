@@ -24,6 +24,7 @@ $(document).ready(function(){
     $(window).resize(function() {
         FixLoginLocation();
         FixContextColumns();
+        FixContextColumns();
     });
     FixLoginLocation();
     FixContextColumns();
@@ -37,26 +38,37 @@ $(document).ready(function(){
 
 function FixLoginLocation() {
     var searchContainerPos = $("#nav-search-container").position();
-    var navContainerPos = $("#nav-bar-ul").position();
     var searchContainerWidth = $("#nav-search-container").width();
-    var navContainerWidth = $("#nav-bar-ul").width();
     var loginWidth = $("#nav-bar-right").width();
 
-    if (searchContainerPos.left + searchContainerWidth > navContainerPos.left + navContainerWidth - loginWidth - 43)
+    //if (searchContainerPos.left + searchContainerWidth > navContainerPos.left + navContainerWidth - loginWidth - 43)
+    //if ($(".nav-bar").width() < 475)
+    if ($(".nav-bar").width() < searchContainerPos.left + searchContainerWidth + loginWidth + 150)
     {
         $(".nav-bar-ul>.nav-bar-right").css("float", "none");
+        $(".nav-bar-ul>.nav-bar-right").css("top", "0px");
+    }
+    else
+    {
+        $(".nav-bar-ul>.nav-bar-right").css("float", "right");
+        $(".nav-bar-ul>.nav-bar-right").css("top", "1px");
+    }
+
+    searchContainerPos = $("#nav-search-container").position();
+    var loginPos = $("#nav-bar-right").position();
+
+    if (loginPos.left < searchContainerPos.left)
+    {
         $("#login-form-container").css("top", "24px");
         $("#login-form-container").css("left", "0px");
         $("#login-form-container").css("right", "auto");
     }
     else
     {
-        $(".nav-bar-ul>.nav-bar-right").css("float", "right");
         $("#login-form-container").css("top", "");
         $("#login-form-container").css("left", "");
         $("#login-form-container").css("right", "");
     }
-
 }
 
 // End Nav Bar //
@@ -287,14 +299,14 @@ function SlideSearch(slideLeft) {
         JustSlid();
         $("#header-search-text-box").css("display", "inline-block");
         $("#header-search-text-box").css("width", "0px");
-        $("#header-search-text-box").animate({"width":"+=150"}, 500, function() { FixLoginLocation() });
+        $("#header-search-text-box").animate({"width":"+=150px"}, 500, function() { FixLoginLocation(); });
         
     }
     else
     if ($("#header-search-text-box").val() == "" && slideLeft == true)
     {
         JustSlid();
-        $("#header-search-text-box").animate({"width":"-=150"}, 500, function() {
+        $("#header-search-text-box").animate({"width":"-=150px"}, 500, function() {
             $("#header-search-text-box").css("display", "none");
             FixLoginLocation();
         });
@@ -420,7 +432,19 @@ function ReadSaveGameReponse(response) {
 function FixContextColumns() {
     var leftPos = $(".left-column").position();
     var rightPos = $(".right-column").position();
-    console.log(leftPos.top  + " : " + rightPos.top);
+
+    // Fix the left column's width to be within 20 px of the right column. Set min-width = 300px
+    var leftWidth = (rightPos.left - leftPos.left - 30);
+    if (leftWidth < 300)
+    {
+        leftWidth = 300;
+    }
+
+    $(".left-column").css("width", leftWidth + "px");
+
+    leftPos = $(".left-column").position();
+    rightPos = $(".right-column").position();
+
     if (leftPos.top > rightPos.top)
     {
         $(".right-column").css("float", "left");
