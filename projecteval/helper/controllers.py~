@@ -9,7 +9,7 @@ import time
 from projecteval import db
 
 from projecteval.api.models import Game, Platform
-from projecteval.api.forms import LoginForm
+from projecteval.auth.forms import LoginForm
 from projecteval.api.models import User
 
 import projecteval.errors.controllers as error_controller
