@@ -9,12 +9,10 @@
         <div class="right-column">
             <!--Platform List-->
             <ul class="no-bullet display-inline">
-                <li>{{ macro.platform_list('Xbox One', 'small-img') }}</li>
-                <li>{{ macro.platform_list('Playstation 4', 'small-img') }}</li>
-                <li>{{ macro.platform_list('Wii U', 'small-img') }}</li>
+                {{ macro.generate_labeled_platform_list(game, 'small-img') }}
             </ul>
             <ul class="no-bullet">
-
+                <li>{{ macro.label_img('ESRB:', game['esrb_url']) }}</li>
                 <li>{{ macro.label_data('Release Date:', game['release_date']) }}</li>
                 <li>{{ macro.label_data('Developer:', game['developer']) }}</li>
                 <li>{{ macro.label_data('Publisher:', game['publisher']) }}</li>

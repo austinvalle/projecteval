@@ -1,9 +1,24 @@
 from projecteval import db
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Table, Column, Integer, ForeignKey
 
 class Base(db.Model):
 	__abstract__ = True
 
  	id = db.Column(db.Integer, primary_key=True)
+
+class Gameplatform(Base):
+	__tablename__ = "gameplatform"
+    
+	game_id = db.Column(db.Integer, ForeignKey('game.id'))
+	platform_id = db.Column(db.Integer, ForeignKey('platform.id'))
+	platform = relationship('Platform', backref='game_assocs')
+    
+	def __init__(self):
+		pass
+
+	def __repr__(self):
+		return "<Gameplatform('%s')" % self.id
 
 class Game(Base):
 	__tablename__ = 'game'
@@ -14,12 +29,14 @@ class Game(Base):
  	developer = db.Column(db.String(128))
  	publisher = db.Column(db.String(128))
  	trailer_url = db.Column(db.String(128))
- 	esrb_id = db.Column(db.Integer)
+ 	esrb_id = db.Column(db.Integer, ForeignKey('esrb.id'))
  	genre_id = db.Column(db.Integer)
  	added_by = db.Column(db.String(128), nullable=False)
  	date_added = db.Column(db.DateTime, default=db.func.current_timestamp())
  	last_modified_by = db.Column(db.String(128), nullable=False)
  	last_modified = db.Column(db.DateTime, default=db.func.current_timestamp())
+	platforms = relationship('Gameplatform', backref='games')
+	esrb = relationship('ESRB', backref='games')
 
 	def __init__(self, title, desc, developer, publisher, trailer_url, added_by, last_modified_by):
 		self.title = title
@@ -95,3 +112,5 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+

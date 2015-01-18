@@ -7,9 +7,7 @@
     {% for game in games %}
     <li class="bottom-margin"><a href="{{ url_for('games.game_info', id=game['id']) }}" class="no-underline">{{ game["title"] }}</a>
         <ul class="no-bullet display-inline">
-            <li>{{ macro.platform_list('Xbox One', 'small-img') }}</li>
-            <li>{{ macro.platform_list('Playstation 4', 'small-img') }}</li>
-            <li>{{ macro.platform_list('Wii U', 'small-img') }}</li>
+            {{ macro.generate_platform_list(game, 'small-img') }}
         </ul>
     </li>
     {% endfor %}

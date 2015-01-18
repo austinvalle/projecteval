@@ -14,6 +14,10 @@
     <input type="checkbox" name="{{ id }}" id="{{ id }}" value="{{ platform_id }}" class="{{ class }}" {% if checked == 'checked' %} checked="checked" {% endif %}/>{{ platform_list(platform_name) }}
 {%- endmacro %}
 
+{% macro label_img(label, url, class='esrb-small-img') -%}
+    <span class="label">{{ label }}</span> <img src="{{ url }}" class="{{ class }}" />
+{%- endmacro %}
+
 {% macro label_data(label, data, color="") -%}
     <span class="label">{{ label }}</span> <span class="data" {% if color != '' %} style="color:{{ color }};" {% endif %}>{{ data }}</span>
 {%- endmacro %}
@@ -53,4 +57,14 @@
     <div>{{ username }}</div>
     <div class="underline"><span class="label">Score:</span> <span class="data">{{ get_rating(rating) }} / 10</span></div>
     <div>{{ review }}</div>
+{%- endmacro %}
+{% macro generate_labeled_platform_list(game, class='small-img') -%}
+    <span class="label">Platforms:</span><br />
+    {{ generate_platform_list(game, class) }}
+{%- endmacro %}
+
+{% macro generate_platform_list(game, class='small-img') -%}
+    {% for platform in game.platforms %}
+        <li>{{ platform_list(platform.name, class) }}</li>
+    {% endfor %}
 {%- endmacro %}

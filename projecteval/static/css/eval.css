@@ -389,5 +389,8 @@ ul .li-right-margin {
 .small-top-margin {
     margin-top: 10px;
 }
-
+.esrb-small-img {
+    width: 40px;
+    vertical-align: top;
+}
 

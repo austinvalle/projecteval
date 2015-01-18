@@ -4,7 +4,7 @@ from projecteval import db
 
 from werkzeug import check_password_hash, generate_password_hash
 
-from projecteval.api.models import User, Game, Platform, ESRB
+from projecteval.api.models import User, Game, Platform, ESRB, Gameplatform
 
 from projecteval.api.forms import RegisterForm, LoginForm
 
@@ -12,40 +12,15 @@ api = Blueprint('api', __name__)
 
 
 # Game API
-@api.route('/api/games/', methods=['GET'])
-def all_games():
-	games = Game.query.all()
-
-	json_result = []
-
-	for game in games:
-		g = {
-			'id': game.id,
-			'title':game.title,
-			'release_date':game.release_date,
-			'desc':game.desc,
-			'developer':game.developer,
-			'publisher':game.publisher,
-			'trailer_url':game.trailer_url,
-			'esrb_id':game.esrb_id,
-			'genre_id':game.genre_id,
-			'added_by':game.added_by,
-			'date_added':game.date_added,
-			'last_modified_by':game.last_modified_by,
-			'last_modified':game.last_modified
+def build_game(game):
+	platforms = []
+	for gameplatform in game.platforms:
+		platform = {
+			'name':gameplatform.platform.name
 		}
-		json_result.append(g)
+		platforms.append(platform)
 
-	return jsonify(games=json_result)
-
-@api.route('/api/games/<int:id>', methods=['GET'])
-def game_info(id):
-	game = Game.query.filter_by(id=id).first()
-
-	if(game == None):
-		abort(404)
-
-	json_result = {
+	result = {
 		'id': game.id,
 		'title':game.title,
 		'release_date':game.release_date,
@@ -58,9 +33,33 @@ def game_info(id):
 		'added_by':game.added_by,
 		'date_added':game.date_added,
 		'last_modified_by':game.last_modified_by,
-		'last_modified':game.last_modified
+		'last_modified':game.last_modified,
+		'platforms': platforms,
+		'esrb_url': game.esrb.image_url
 	}
 
+	return result
+
+@api.route('/api/games/', methods=['GET'])
+def all_games():
+	games = Game.query.all()
+
+	json_result = []
+
+	for game in games:
+		g = build_game(game)
+		json_result.append(g)
+
+	return jsonify(games=json_result)
+
+@api.route('/api/games/<int:id>', methods=['GET'])
+def game_info(id):
+	game = Game.query.filter_by(id=id).first()
+
+	if(game == None):
+		abort(404)
+
+	json_result = build_game(game)
 	return jsonify(game=json_result)
 
 # Platform API
