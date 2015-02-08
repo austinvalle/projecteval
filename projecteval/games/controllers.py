@@ -50,6 +50,6 @@ def edit_game(id=None):
 def save_game():
     if (not session["user_id"]):
         return redirect(url_for('games.all_games'), 302)
-    return jsonify({ "success" : "true", "errors" : [] })
+    return api.edit_game()
 
 

@@ -6,15 +6,16 @@
 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token" />
 <form method="POST" action="javascript:SaveGame();" accept-charset="UTF-8" role="form" name="edit_game_form" id="edit_game_form">
 <input type="hidden" name="game_id" id="game_id" value="{{ game['id'] }}" />
+<ul id='game_errors' class="no-bullet error-list-text"></ul>
 <h1>{{ macro.label_data_edit('Title:', game['title'], 'game_title', 'normal-input', 'readonly') }}</h1><!--To do: check if adding game, otherwise keep title read only -->
     <div class="container">
        <!--Right column-->
         <div class="right-column">
             <!--Platform List-->
             <ul class="no-bullet"> <!--To do: link platform with game...waiting on API for that-->
-                <li>{{ macro.platform_list_check('Xbox One', 1, 'game_platform_1', 'game_platform_input') }}</li>
-                <li>{{ macro.platform_list_check('Playstation 4', 2, 'game_platform_2', 'game_platform_input') }}</li>
-                <li>{{ macro.platform_list_check('Wii U', 3, 'game_platform_3', 'game_platform_input') }}</li>
+                <li>{{ macro.platform_list_check('Xbox One', 1, 'game_platform_1', 'game_platform_input', game.platforms) }}</li>
+                <li>{{ macro.platform_list_check('Playstation 4', 2, 'game_platform_2', 'game_platform_input', game.platforms) }}</li>
+                <li>{{ macro.platform_list_check('Wii U', 3, 'game_platform_3', 'game_platform_input', game.platforms) }}</li>
             </ul>
             <ul class="no-bullet">
 

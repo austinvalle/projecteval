@@ -6,7 +6,7 @@ from werkzeug import check_password_hash, generate_password_hash
 
 from projecteval.api.models import User, Game, Platform, ESRB, Gameplatform
 
-from projecteval.api.forms import RegisterForm, LoginForm
+from projecteval.api.forms import RegisterForm, LoginForm, EditGameForm
 
 api = Blueprint('api', __name__)
 
@@ -148,6 +148,43 @@ def esrb_info(id):
 	}
 
 	return jsonify(esrb=json_result)
+
+@api.route('/api/edit/game/', methods=['POST'])
+def edit_game():
+	errors = [];
+	id = request.form.get('id')
+	releaseDate = request.form.get('release_date')
+	developer = request.form.get('developer')
+	publisher = request.form.get('publisher')
+	description = request.form.get('desc')
+	trailerUrl = request.form.get('trailer')
+	title = request.form.get('title')
+	form = EditGameForm(id=id, description=description, releaseDate=releaseDate, developer=developer, publisher=publisher, trailerUrl=trailerUrl, title=title)
+	# EditGameForm doesn't take trailerUrl and description values initially, use below as a workaround	
+	form.description.data = description
+	form.trailerUrl.data = trailerUrl
+
+	if form.validate():
+		dbsession = db.session()
+		game = Game.query.filter_by(id=id).first()
+		if (game != None):
+			# Update game here
+			game.title = title
+			game.release_date = releaseDate
+			game.desc = description
+			game.developer = developer
+			game.publisher = publisher
+			game.trailer_url = trailerUrl
+
+			# To Do: add functionality for ESRB and platforms
+			dbsession.commit()
+			return jsonify({"success":"true"})
+		else:
+			errors.append("No such game exists!")		
+	else:
+		errors_to_json(form, errors)
+
+	return jsonify({"success":"false", "errors":errors})
 
 @api.route('/api/user/', methods=['POST'])
 def register_user():

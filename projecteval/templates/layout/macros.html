@@ -10,8 +10,14 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro platform_list_check(platform_name, platform_id, id, class='', checked='checked') -%}
-    <input type="checkbox" name="{{ id }}" id="{{ id }}" value="{{ platform_id }}" class="{{ class }}" {% if checked == 'checked' %} checked="checked" {% endif %}/>{{ platform_list(platform_name) }}
+{% macro platform_list_check(platform_name, platform_id, id, class='', platforms) -%}
+    <input type="checkbox" name="{{ id }}" id="{{ id }}" value="{{ platform_id }}" class="{{ class }}"
+        {% for platform in platforms %}
+            {%- if platform.name == platform_name %}
+                 checked="checked" 
+            {% endif %}
+        {%- endfor %}
+     />{{ platform_list(platform_name) }}
 {%- endmacro %}
 
 {% macro label_img(label, url, class='esrb-small-img') -%}

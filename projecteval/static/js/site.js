@@ -345,6 +345,7 @@ function BuildGameForm() {
              "desc" : $("#game_desc").val(),
              "id" : $("#game_id").val(),
              "title" : $("#game_title").val(),
+             "desc" : $("#game_desc").val(),
              "release_date" : $("#game_release_date").val(),
              "developer" : $("#game_developer").val(),
              "publisher" : $("#game_publisher").val(),
@@ -419,7 +420,13 @@ function ReadSaveGameReponse(response) {
     }
     else
     {
-        ShowPopUp("Something went wrong and we couldn't save the game!", function() { return window.location.reload() });
+        // Output errors
+        $("#game_errors").empty();
+        $(jsonResponse.errors).each(function(index) {
+            var error = $("<li/>").text(this);
+            $("#game_errors").append(error);
+            });
+        //ShowPopUp("Something went wrong and we couldn't save the game!", window.location.reload);//function() { return window.location.reload() });
     }
 }
 

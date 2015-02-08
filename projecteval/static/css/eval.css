@@ -376,7 +376,7 @@ ul .li-right-margin {
     border: 1px solid #E0E0E0;
 }
 .error-list-text li {
-    color: black !important;
+    color: red !important;
     font-size: 1.0em !important;
 }
 .no-top-margin {
