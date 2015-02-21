@@ -27,3 +27,13 @@ def convert_date_string(datestring):
 
 def get_login_form():
     return LoginForm(request.login_form)
+
+def extractPlatformIds(requestForm):
+    platformIds = []
+    i = 0
+
+    while requestForm.get('platforms['+ str(i) + '][id]'):
+        platformIds.append(requestForm.get('platforms['+ str(i) + '][id]'))
+        i += 1
+
+    return platformIds

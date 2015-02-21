@@ -14,8 +14,9 @@ class Gameplatform(Base):
 	platform_id = db.Column(db.Integer, ForeignKey('platform.id'))
 	platform = relationship('Platform', backref='game_assocs')
     
-	def __init__(self):
-		pass
+	def __init__(self, game_id, platform_id):
+		self.game_id = game_id
+		self.platform_id = platform_id
 
 	def __repr__(self):
 		return "<Gameplatform('%s')" % self.id

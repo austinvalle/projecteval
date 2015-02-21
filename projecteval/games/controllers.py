@@ -40,16 +40,26 @@ def edit_game(id=None):
     if (not session["user_id"]):
         return redirect(url_for('games.game_info', id=id), 302)
     response = api.game_info(id)
+    platform_response = api.all_platforms()
+
     helper.check_response(response)
+    helper.check_response(platform_response)
+
+    platform_list = json.loads(platform_response.data)
+    platform_list = platform_list["platforms"]
+
     game = json.loads(response.data)
-    game = game["game"]
+    game = game["game"]   
     game["release_date"] = helper.convert_date_string(game["release_date"])
-    return render_template("edit/edit_game.html", game=game)
+    
+    return render_template("edit/edit_game.html", game=game, platform_list=platform_list)
 
 @games.route('/edit/games/', methods=['POST'])
 def save_game():
     if (not session["user_id"]):
         return redirect(url_for('games.all_games'), 302)
-    return api.edit_game()
 
+    platformIds = helper.extractPlatformIds(request.form)
+
+    return api.edit_game(platformIds)
 

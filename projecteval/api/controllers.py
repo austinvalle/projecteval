@@ -16,6 +16,7 @@ def build_game(game):
 	platforms = []
 	for gameplatform in game.platforms:
 		platform = {
+			'id':gameplatform.platform.id,
 			'name':gameplatform.platform.name
 		}
 		platforms.append(platform)
@@ -150,7 +151,7 @@ def esrb_info(id):
 	return jsonify(esrb=json_result)
 
 @api.route('/api/edit/game/', methods=['POST'])
-def edit_game():
+def edit_game(platformIds):
 	errors = [];
 	id = request.form.get('id')
 	releaseDate = request.form.get('release_date')
@@ -159,12 +160,18 @@ def edit_game():
 	description = request.form.get('desc')
 	trailerUrl = request.form.get('trailer')
 	title = request.form.get('title')
+	platforms = set([int(x) for x in platformIds])
+
 	form = EditGameForm(id=id, description=description, releaseDate=releaseDate, developer=developer, publisher=publisher, trailerUrl=trailerUrl, title=title)
 	# EditGameForm doesn't take trailerUrl and description values initially, use below as a workaround	
 	form.description.data = description
 	form.trailerUrl.data = trailerUrl
 
-	if form.validate():
+	# Validate platforms outside of Form as workaround for now
+	if not validatePlatformIds(platforms):
+		errors.append('Game requires at least one platform')
+
+	if form.validate() and not errors:
 		dbsession = db.session()
 		game = Game.query.filter_by(id=id).first()
 		if (game != None):
@@ -175,6 +182,28 @@ def edit_game():
 			game.developer = developer
 			game.publisher = publisher
 			game.trailer_url = trailerUrl
+
+			gameplatforms = Gameplatform.query.filter_by(game_id=game.id).all()
+			currentIds = set()
+
+			for g in gameplatforms:
+				currentIds.add(g.platform_id)
+
+			if not currentIds.issubset(platforms):
+				for cId in currentIds:
+					if not cId in platforms:
+						deleteThis = Gameplatform.query.filter_by(game_id=game.id, platform_id=cId).first()
+						dbsession.delete(deleteThis)
+					else:
+						platforms.remove(cId)
+
+			if len(platforms) > 0:
+				for addId in platforms:
+					exists = Gameplatform.query.filter_by(game_id=game.id, platform_id=addId).first()
+
+					if not exists:
+						addThis = Gameplatform(game.id, addId)
+						dbsession.add(addThis)
 
 			# To Do: add functionality for ESRB and platforms
 			dbsession.commit()
@@ -243,6 +272,12 @@ def logout_user():
 	session['user_id'] = None
 	session['user_name'] = None
 	return ""   
+
+def validatePlatformIds(platforms):
+	if len(platforms) <= 0:
+		return False
+
+	return True
 
 # Error Handling
 @api.errorhandler(404)

@@ -10,10 +10,10 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro platform_list_check(platform_name, platform_id, id, class='', platforms) -%}
-    <input type="checkbox" name="{{ id }}" id="{{ id }}" value="{{ platform_id }}" class="{{ class }}"
-        {% for platform in platforms %}
-            {%- if platform.name == platform_name %}
+{% macro platform_list_check(id, gameplatforms, platform_id, platform_name) -%}
+    <input type="checkbox" name="{{id}}" id="{{id}}" class="game_platform_input" value="{{platform_id}}"
+        {% for platform in gameplatforms %}
+            {%- if platform.id == platform_id %}
                  checked="checked" 
             {% endif %}
         {%- endfor %}

@@ -12,10 +12,10 @@
        <!--Right column-->
         <div class="right-column">
             <!--Platform List-->
-            <ul class="no-bullet"> <!--To do: link platform with game...waiting on API for that-->
-                <li>{{ macro.platform_list_check('Xbox One', 1, 'game_platform_1', 'game_platform_input', game.platforms) }}</li>
-                <li>{{ macro.platform_list_check('Playstation 4', 2, 'game_platform_2', 'game_platform_input', game.platforms) }}</li>
-                <li>{{ macro.platform_list_check('Wii U', 3, 'game_platform_3', 'game_platform_input', game.platforms) }}</li>
+            <ul class="no-bullet">
+                {% for platform in platform_list %}
+                     <li>{{ macro.platform_list_check('game_platform_' + platform.id|string, game.platforms, platform.id, platform.name) }}</li> 
+                {% endfor %}
             </ul>
             <ul class="no-bullet">
 
