@@ -102,7 +102,7 @@ function Login() {
         
         $.ajax({
             type:"POST",
-            url:"http://0.0.0.0:8080/api/login/",
+            url:"http://localhost:8080/api/login/",
             data:form,
             //dataType:"application/json;charset=UTF-8",
             success: function(response) {
@@ -138,7 +138,7 @@ function Register() {
         
         $.ajax({
             type:"POST",
-            url:"http://0.0.0.0:8080/api/user/",
+            url:"http://localhost:8080/api/user/",
             data:form,
             //dataType:"application/json;charset=UTF-8",
             success: function(response) {
@@ -265,7 +265,7 @@ function DateValidate(input, regex, compareValue) {
 function Logout() {
     $.ajax({
     type:"POST",
-    url:"http://0.0.0.0:8080/api/logout/",
+    url:"http://localhost:8080/api/logout/",
     data: { "csrf_token" : $("#csrf_token").val() },
     //dataType:"application/json;charset=UTF-8",
     success: function(response) {
@@ -323,7 +323,7 @@ function SaveGame() {
         
         $.ajax({
             type:"POST",
-            url:"http://0.0.0.0:8080/edit/games/",
+            url:"http://localhost:8080/edit/games/",
             data:form,
             //dataType:"application/json;charset=UTF-8",
             success: function(response) {
