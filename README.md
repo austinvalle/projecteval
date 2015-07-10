@@ -10,7 +10,6 @@ Installation
     - Create a virtual directory called 'env' - *virtualenv env*
 5. Run the virtual environment - *env\Scripts\activate.bat*
 6. For windows only - Download Microsoft Visual C++ Compiler for Python 2.7
-
 7. Install the following software in the virtual environment:
 
   - Flask
@@ -40,7 +39,6 @@ Installation
 
   - Flask-Restful
     - *pip install flask-restful*
-
 8. Open up pgAdmin III
   - Create database user w/ sufficient roles - u= evaldba, p= hello911
   - Create database "evaldb"
