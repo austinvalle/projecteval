@@ -1,5 +1,5 @@
 Installation
-===========
+============
 
 (Tested on Windows 8.1)
 1. Download evalproject from Git
