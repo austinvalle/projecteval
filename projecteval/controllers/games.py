@@ -1,22 +1,15 @@
-from flask import Blueprint, request, jsonify, render_template, flash, session, url_for, redirect
-
+from flask import Blueprint, request, render_template, session, url_for, redirect
 import json
-
-from projecteval import db
-
-from projecteval.api.models import Game, Platform
-
-import projecteval.api.controllers as api
-
-import projecteval.helper.controllers as helper
+import projecteval.api.controllers.game as gameapi
+import projecteval.api.controllers.platform as platformapi
+import projecteval.controllers.helpers as helper
 
 games = Blueprint('games', __name__)
 
 
-# Game
 @games.route('/games/', methods=['GET'])
 def all_games():
-    response = api.all_games()
+    response = gameapi.all_games()
     helper.check_response(response)
     games = json.loads(response.data)
     games = games["games"]
@@ -26,7 +19,7 @@ def all_games():
 def game_info(id=None):
     if (id is None):
         return self.all_games()
-    response = api.game_info(id)
+    response = gameapi.game_info(id)
     helper.check_response(response)
     game = json.loads(response.data)
     game = game["game"]
@@ -39,8 +32,8 @@ def edit_game(id=None):
         return redirect(url_for('games.all_games'), 302)
     if (not session["user_id"]):
         return redirect(url_for('games.game_info', id=id), 302)
-    response = api.game_info(id)
-    platform_response = api.all_platforms()
+    response = gameapi.game_info(id)
+    platform_response = platformapi.all_platforms()
 
     helper.check_response(response)
     helper.check_response(platform_response)
@@ -61,5 +54,5 @@ def save_game():
 
     platformIds = helper.extractPlatformIds(request.form)
 
-    return api.edit_game(platformIds)
+    return gameapi.edit_game(platformIds)
 

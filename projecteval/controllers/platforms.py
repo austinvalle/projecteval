@@ -1,22 +1,14 @@
-from flask import Blueprint, request, jsonify, render_template, flash
-
+from flask import Blueprint, render_template
 import json
-
-from projecteval import db
-
-from projecteval.api.models import Game, Platform
-
-import projecteval.api.controllers as api
-
-import projecteval.helper.controllers as helper
+import projecteval.api.controllers.platform as platformapi
+import projecteval.controllers.helpers as helper
 
 platforms = Blueprint('platforms', __name__)
 
 
-# Platform
 @platforms.route('/platforms/', methods=['GET'])
 def all_platforms():
-    response = api.all_platforms()
+    response = platformapi.all_platforms()
     helper.check_response(response)
     platforms = json.loads(response.data)
     platforms = platforms["platforms"]
@@ -26,7 +18,7 @@ def all_platforms():
 def platform_info(id=None):
     if (id is None):
         return self.all_games()
-    response = api.platform_info(id)
+    response = platformapi.platform_info(id)
     helper.check_response(response)
     platform = json.loads(response.data)
     platform = platform["platform"]
