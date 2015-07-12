@@ -5,19 +5,21 @@ Installation
 
 1. Download evalproject from Git
 
-2. Go to terminal
+2. Download Python 2.7.10
 
-3. Change to project home directory (folder with **run.py** file)
+3. Go to terminal
 
-4.  Create a virtual environment in home directory
+4. Change to project home directory (folder with **run.py** file)
+
+5.  Create a virtual environment in home directory
     - Install virtualenv tool - *pip install virtualenv*
     - Create a virtual directory called 'env' - *virtualenv env*
 
-5.  Run the virtual environment - *env\Scripts\activate.bat*
+6.  Run the virtual environment - *env\Scripts\activate.bat*
 
-6. For windows only - Download Microsoft Visual C++ Compiler for Python 2.7
+7. For windows only - Download Microsoft Visual C++ Compiler for Python 2.7
 
-7. Install the following software in the virtual environment:
+8. Install the following software in the virtual environment:
   - Flask
     - *pip install flask*
   - Flask-Login
@@ -38,13 +40,13 @@ Installation
     - *pip install requests*
   - Flask-Restful
     - *pip install flask-restful*
-8. Open up pgAdmin III
+9. Open up pgAdmin III
   - Create database user w/ sufficient roles - u= evaldba, p= hello911
   - Create database "evaldb"
-9. Run the project (*python run.py*)
-10. Go back to pgAdmin III and run the test data insert scripts in projecteval\scripts\
-11. Test the app 
+10. Run the project (*python run.py*)
+11. Go back to pgAdmin III and run the test data insert scripts in projecteval\scripts\
+12. Test the app 
   - Go to **http://localhost:8080/login** for a html template 
   - Go to **http://localhost:8080/games** for a sample api response for first ten games in db
-12. If anything is missing (in regards to installation), add 
+13. If anything is missing (in regards to installation), add 
    it to this file.
