@@ -13,6 +13,7 @@ from projecteval.api.controllers.game import gameapi as api_game
 from projecteval.api.controllers.platform import platformapi as api_platform
 from projecteval.api.controllers.user import userapi as api_user
 
+# combine UI blueprints?
 from projecteval.controllers.games import games as games_module
 from projecteval.controllers.platforms import platforms as platform_module
 from projecteval.controllers.errors import errors as error_module
