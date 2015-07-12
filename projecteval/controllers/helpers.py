@@ -27,3 +27,35 @@ def extractPlatformIds(requestForm):
         i += 1
 
     return platformIds
+
+def parse_fields(fields):
+        field = ''
+        subfields= ''
+
+        level = 0
+        results= {}
+        fields = fields.lower()
+
+        for c in fields:
+            if c == '(':
+                level += 1
+                if level == 1:
+                    subfields = ''
+                    continue
+            elif c == ')':
+                level -= 1
+
+            if level == 0:
+                if c in 'abcdefghijklmnopqrstuvwxyz0123456789_-':
+                    field += c
+                else:
+                    if field != '':
+                        results[field] = subfields
+                    field = ''
+                    subfields = ''
+            else:
+                subfields += c
+        if level == 0 and field != '':
+            results[field] = subfields
+
+        return results
