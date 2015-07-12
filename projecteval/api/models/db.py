@@ -147,3 +147,8 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+    def __init__(self, username, email, password):
+    	self.username = username
+    	self.email = email
+    	self.password = password

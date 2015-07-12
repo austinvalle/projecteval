@@ -2,6 +2,7 @@
 
 API:
 - Add limits and offsets to GameAPI and PlatformAPI
+- fix errors, fix register
 - Create SearchAPI
 - Error handling, return JSON w/ stack trace, message, etc.
 - Server logging?
