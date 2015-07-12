@@ -3,6 +3,11 @@
 API:
 - Add limits and offsets to GameAPI and PlatformAPI
 - Create SearchAPI
+- Error handling, return JSON w/ stack trace, message, etc.
+- Server logging?
+- Unit test GameAPI and PlatformAPI
+- Add game, add platform, edit platform
+- Change edit game to UPDATE method on game/id
 
 UI:
 -
