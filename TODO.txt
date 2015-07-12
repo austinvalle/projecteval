@@ -1,0 +1,8 @@
+*** TO-DOs ***
+
+API:
+- Add limits and offsets to GameAPI and PlatformAPI
+- Create SearchAPI
+
+UI:
+-
