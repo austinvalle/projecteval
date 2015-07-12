@@ -16,6 +16,7 @@ Installation
     - Create a virtual directory called 'env' - *virtualenv env*
 
 6.  Run the virtual environment - *env\Scripts\activate.bat*
+    - For Linux/Mac - *source env\bin\activate*
 
 7. For windows only - Download Microsoft Visual C++ Compiler for Python 2.7
 
