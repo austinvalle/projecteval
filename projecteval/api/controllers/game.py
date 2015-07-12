@@ -8,44 +8,15 @@ from projecteval.api.models.forms import EditGameForm
 
 gameapi = Blueprint('gameapi', __name__)
 
-def build_game(game):
-	platforms = []
-	for gameplatform in game.platforms:
-		platform = {
-			'id':gameplatform.platform.id,
-			'name':gameplatform.platform.name
-		}
-		platforms.append(platform)
-
-	result = {
-		'id': game.id,
-		'title':game.title,
-		'release_date':game.release_date,
-		'desc':game.desc,
-		'developer':game.developer,
-		'publisher':game.publisher,
-		'trailer_url':game.trailer_url,
-		'esrb_id':game.esrb_id,
-		'genre_id':game.genre_id,
-		'added_by':game.added_by,
-		'date_added':game.date_added,
-		'last_modified_by':game.last_modified_by,
-		'last_modified':game.last_modified,
-		'platforms': platforms,
-		'esrb_url': game.esrb.image_url
-	}
-
-	return result
-
 @gameapi.route('/api/games/', methods=['GET'])
 def all_games():
+	fields = request.args.get('fields')
 	games = Game.query.all()
 
 	json_result = []
 
 	for game in games:
-		g = build_game(game)
-		json_result.append(g)
+		json_result.append(game.toJSON(fields))
 
 	return jsonify(games=json_result)
 
@@ -55,9 +26,8 @@ def game_info(id):
 
 	if(game == None):
 		abort(404)
-
-	json_result = build_game(game)
-	return jsonify(game=json_result)
+		
+	return jsonify(game=game.toJSON())
 
 @gameapi.route('/api/edit/game/', methods=['POST'])
 def edit_game(platformIds):
