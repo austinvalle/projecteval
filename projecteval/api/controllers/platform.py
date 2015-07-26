@@ -4,7 +4,7 @@ from projecteval.api.models.db import Platform
 
 platformapi = Blueprint('platformapi', __name__)
 
-@platformapi.route('/api/platforms/', methods=['GET'])
+@platformapi.route('/api/platforms/', methods=['GET'], strict_slashes = False)
 def all_platforms():
 	fields = request.args.get('fields')
 	platforms = Platform.query.all()
@@ -16,7 +16,7 @@ def all_platforms():
 
 	return jsonify(platforms=json_result)
 
-@platformapi.route('/api/platforms/<int:id>', methods=['GET'])
+@platformapi.route('/api/platforms/<int:id>/', methods=['GET'], strict_slashes = False)
 def platform_info(id):
 	platform = Platform.query.filter_by(id=id).first()
 

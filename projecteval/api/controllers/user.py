@@ -10,7 +10,7 @@ from projecteval.api.models.forms import RegisterForm, LoginForm
 
 userapi = Blueprint('userapi', __name__)
 
-@userapi.route('/api/user/', methods=['POST'])
+@userapi.route('/api/user/', methods=['POST'], strict_slashes = False)
 def register_user():
 	errors = [];
 	email = request.form.get('email')
@@ -41,7 +41,7 @@ def register_user():
 
 	return jsonify({"success": "false", "errors": errors})
 
-@userapi.route('/api/login/', methods=['POST'])
+@userapi.route('/api/login/', methods=['POST'], strict_slashes = False)
 def login_user():
 	errors = []
 	email = request.form.get('email')
@@ -62,7 +62,7 @@ def login_user():
 		errors_to_json(form, errors)
 	return jsonify({"success":"false","errors":errors}) 
 
-@userapi.route('/api/logout/', methods=['POST'])
+@userapi.route('/api/logout/', methods=['POST'], strict_slashes = False)
 def logout_user():
 	session['user_id'] = None
 	session['user_name'] = None

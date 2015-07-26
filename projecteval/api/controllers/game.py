@@ -8,7 +8,8 @@ from projecteval.api.models.forms import EditGameForm
 
 gameapi = Blueprint('gameapi', __name__)
 
-@gameapi.route('/api/games/', methods=['GET'])
+
+@gameapi.route('/api/games/', methods=['GET'], strict_slashes = False)
 def all_games():
 	fields = request.args.get('fields')
 	games = Game.query.all()
@@ -20,7 +21,7 @@ def all_games():
 
 	return jsonify(games=json_result)
 
-@gameapi.route('/api/games/<int:id>', methods=['GET'])
+@gameapi.route('/api/games/<int:id>/', methods=['GET'], strict_slashes = False)
 def game_info(id):
 	game = Game.query.filter_by(id=id).first()
 
@@ -29,7 +30,7 @@ def game_info(id):
 		
 	return jsonify(game=game.toJSON())
 
-@gameapi.route('/api/edit/game/', methods=['POST'])
+@gameapi.route('/api/edit/game/', methods=['POST'], strict_slashes = False)
 def edit_game(platformIds):
 	errors = [];
 	id = request.form.get('id')
